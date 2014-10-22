@@ -22,7 +22,7 @@ class Ask
      * A composer installation script to define the different configuration
      * parameters
      *
-     * @param Event $event the composer event
+     * @param Event $event The composer event
      *
      * @return void
      */

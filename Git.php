@@ -21,7 +21,9 @@ class Git
     /**
      * Delete current git and recreate new one for the project
      *
-     * @param Event $event
+     * @param Event $event The composer event
+     *
+     * @return void
      */
     public static function reinit(Event $event)
     {

@@ -28,7 +28,7 @@ class Parameters
     /**
      * Constructor
      *
-     * @param IOInterface $io
+     * @param IOInterface $io The input output interface
      */
     public function __construct(IOInterface $io)
     {
@@ -44,10 +44,10 @@ class Parameters
      *
      * The values entered are written in a new ini-file
      *
-     * @param string $defaultPath   the ini-file to read
-     * @param string $newPath       the ini-file to write
-     * @param array  $sections      the section to question
-     * @param array  $hiddenAnswers an associative array where the keys are a
+     * @param string $defaultPath   The ini-file to read
+     * @param string $newPath       The ini-file to write
+     * @param array  $sections      The section to question
+     * @param array  $hiddenAnswers An associative array where the keys are a
      * section name and the value are a list of key where the answer will be
      * hidden
      *
@@ -78,7 +78,8 @@ class Parameters
 
             $m = sprintf(
                 '<info>there\'s this section named %s in the "%s" file</info>',
-                $section, $defaultPath
+                $section,
+                $defaultPath
             );
             $this->io->write($m);
 
@@ -100,7 +101,8 @@ class Parameters
 
                     $q = sprintf(
                         '<question>%s</question> (<comment>%s</comment>): ',
-                        $key, $default
+                        $key,
+                        $default
                     );
                     $value = $this->io->ask($q, $default);
                 }
@@ -117,7 +119,7 @@ class Parameters
      * Create te content of an ini-file from an array (reverse fonction to
      * parse_ini_file, but does not write in a file)
      *
-     * @param array $config an associative array (correspond to an ini
+     * @param array $config An associative array (correspond to an ini
      * structured file)
      *
      * @return string the content of an ini-file
@@ -143,7 +145,7 @@ class Parameters
     /**
      * Return the line corresponding to a section in an ini-file
      *
-     * @param type $section
+     * @param type $section The name of the section
      *
      * @return string
      */
@@ -155,8 +157,8 @@ class Parameters
     /**
      * Convert a key - value couple into an ini Line
      *
-     * @param string $key   key
-     * @param string $value value
+     * @param string $key   The key
+     * @param string $value The value
      *
      * @return string
      */
@@ -168,7 +170,7 @@ class Parameters
     /**
      * Wrap a value inside enclosure (" or ')
      *
-     * @param string $value value
+     * @param string $value The value
      *
      * @return string
      * @throws \Exception in case of wrong ini value

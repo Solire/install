@@ -46,6 +46,13 @@ class DbServer
      *
      * @param array $config
      */
+
+    /**
+     * Constructor
+     *
+     * @param array       $config The doctrine connection parameters
+     * @param IOInterface $io     The input output interface
+     */
     public function __construct($config, IOInterface $io)
     {
         $this->config = $config;
@@ -59,6 +66,11 @@ class DbServer
         $this->io = $io;
     }
 
+    /**
+     * Create the database
+     *
+     * @return boolean
+     */
     public function create()
     {
         $dbName = $this->config['dbname'];
@@ -91,6 +103,13 @@ class DbServer
         return false;
     }
 
+    /**
+     * Import a sql file into the database
+     *
+     * @param type $sqlDumpPath The path to an .sql file
+     *
+     * @return void
+     */
     public function import($sqlDumpPath)
     {
         $cmd = 'mysql -h"' . $this->config['host'] . '" '

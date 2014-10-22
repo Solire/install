@@ -18,6 +18,13 @@ use Composer\Script\Event;
  */
 class Db
 {
+    /**
+     * Install the project database
+     *
+     * @param Event $event The composer event
+     *
+     * @return void
+     */
     public static function create(Event $event)
     {
         $io = $event->getIO();
