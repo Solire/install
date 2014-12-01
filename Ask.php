@@ -24,7 +24,7 @@ class Ask
     public static function parameters(Event $event)
     {
         $extras = $event->getComposer()->getPackage()->getExtra();
-        $filesPath = $extras['solire']['parameters'];
+        $filesPath = $extras['solire']['ask'];
         $parameters = new Parameters($event->getIO());
         foreach ($filesPath as $filePath => $moreParams) {
             $sections = null;
