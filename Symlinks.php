@@ -46,12 +46,10 @@ class Symlinks
                     continue;
                 }
             }
-            $link = realpath($linkDir);
-
-            $event->getIO()->write('$target : ' . $target);
-            $event->getIO()->write('$link : ' . $link);
-            $event->getIO()->write('__________');
-            $event->getIO()->write('');
+            $hierarchie = explode('/', $linkDir);
+            $lastDir = array_pop($hierarchie);
+            $parent = implode('/', $hierarchie);
+            $link = realpath($parent) . '/' . $lastDir;
 
             symlink($target, $link);
         }
@@ -82,6 +80,6 @@ class Symlinks
             }
         }
 
-        return mkdir($path);
+        return mkdir($path, 0777, true);
     }
 }
