@@ -31,7 +31,7 @@ class Symlinks
             'client/Back' => 'public/back/client',
         ];
         foreach ($appDirs as $targetDir => $linkDir) {
-            $target = realpath('vendor/solire/' . $appDir);
+            $target = realpath('vendor/solire/' . $targetDir);
             if (!file_exists($target)) {
                 continue;
             }
