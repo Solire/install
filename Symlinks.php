@@ -20,9 +20,9 @@ class Symlinks
      */
     public static function create(Event $event)
     {
-        self::createDirForce('public');
-        self::createDirForce('public/front');
-        self::createDirForce('public/back');
+        self::createDir('public');
+        self::createDir('public/front');
+        self::createDir('public/back');
 
         $appDirs = [
             'front' => 'public/front/default',
