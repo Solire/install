@@ -47,7 +47,8 @@ class DbServer
         unset($config['dbname']);
         $config['driver'] = 'pdo_mysql';
         $config['driverOptions'] = array(
-            \PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8'
+            \PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8',
+            \PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION,
         );
         $this->connection = DriverManager::getConnection($config);
 
@@ -65,14 +66,14 @@ class DbServer
         try {
             $this->connection->getSchemaManager()->createDatabase($dbName);
             $m = sprintf(
-                '<info>The database "%s" has been recreated</info>',
+                '<info>The database "%s" has been created</info>',
                 $this->config['dbname']
             );
             $this->io->write($m);
             return true;
         } catch (\Exception $e) {
             $q = sprintf(
-                '<error>The database "%s" already exists, drop current databases ? (true)</error>',
+                '<error>The database "%s" already exists, drop current databases ? [y/N]</error>',
                 $dbName
             );
             $ans = $this->io->askConfirmation($q);
