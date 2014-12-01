@@ -1,5 +1,5 @@
 <?php
-namespace Solire\Install;
+namespace Solire\Install\Lib;
 
 use Doctrine\DBAL\DriverManager;
 use Composer\IO\IOInterface;

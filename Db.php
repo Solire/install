@@ -4,6 +4,7 @@ namespace Solire\Install;
 use Composer\Script\Event;
 
 use Solire\Install\Lib\Ini;
+use Solire\Install\Lib\DbServer;
 
 /**
  * Install the databases needed in the project
