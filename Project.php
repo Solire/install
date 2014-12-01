@@ -13,6 +13,8 @@ use Solire\Install\Lib\Ini;
  */
 class Project
 {
+    const NETBEANS = 'nbproject/project.xml';
+
     /**
      * Ask for project's name and update différent config with it
      *
