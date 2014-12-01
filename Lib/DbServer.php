@@ -1,11 +1,4 @@
 <?php
-/**
- * Connects to a sql server, creates databases, import sql file
- *
- * @author  thansen <thansen@solire.fr>
- * @license CC by-nc http://creativecommons.org/licenses/by-nc/3.0/fr/
- */
-
 namespace Solire\Install;
 
 use Doctrine\DBAL\DriverManager;
@@ -37,15 +30,9 @@ class DbServer
     /**
      * Input / Output interface
      *
-     * @var Composer\IO\IOInterface
+     * @var IOInterface
      */
     private $io;
-
-    /**
-     * Constructor
-     *
-     * @param array $config
-     */
 
     /**
      * Constructor
@@ -58,6 +45,7 @@ class DbServer
         $this->config = $config;
 
         unset($config['dbname']);
+        $config['driver'] = 'pdo_mysql';
         $config['driverOptions'] = array(
             \PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8'
         );
@@ -71,7 +59,7 @@ class DbServer
      *
      * @return boolean
      */
-    public function create()
+    public function connect()
     {
         $dbName = $this->config['dbname'];
         try {

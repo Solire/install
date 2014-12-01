@@ -1,14 +1,9 @@
 <?php
-/**
- * Prompts questions relative to ini-files
- *
- * @author  thansen <thansen@solire.fr>
- * @license CC by-nc http://creativecommons.org/licenses/by-nc/3.0/fr/
- */
-
 namespace Solire\Install;
 
 use Composer\Script\Event;
+
+use Solire\Install\Lib\Parameters;
 
 /**
  * Prompts questions relative to ini-files

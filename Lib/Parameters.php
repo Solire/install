@@ -1,12 +1,5 @@
 <?php
-/**
- * Prompt parameters from a list of ini-files
- *
- * @author  thansen <thansen@solire.fr>
- * @license CC by-nc http://creativecommons.org/licenses/by-nc/3.0/fr/
- */
-
-namespace Solire\Install;
+namespace Solire\Install\Lib;
 
 use Composer\IO\IOInterface;
 
@@ -59,10 +52,34 @@ class Parameters
         $sections = null,
         $hiddenAnswers = null
     ) {
+        $config = $this->askIni($defaultPath, $sections, $hiddenAnswers);
+        Ini::write($newPath, $config);
+    }
+
+    /**
+     * Read an ini-file, an foreach sections (if defined) or all sections,
+     * for each line the value will be prompt.
+     *
+     * You can define for each sections some keys who's answer better be hidden,
+     * like the databases password.
+     *
+     * @param string $iniPath       The ini-file to read
+     * @param array  $sections      The section to question
+     * @param array  $hiddenAnswers An associative array where the keys are a
+     * section name and the value are a list of key where the answer will be
+     * hidden
+     *
+     * @return array
+     */
+    public function askIni(
+        $iniPath,
+        $sections = null,
+        $hiddenAnswers = null
+    ) {
         /**
          * Use Solire\Lib\Config instead
          */
-        $config = parse_ini_file($defaultPath, true);
+        $config = Ini::parse($iniPath);
 
         foreach ($config as $section => $list) {
             $hiddenAnswer = [];
@@ -79,7 +96,7 @@ class Parameters
             $m = sprintf(
                 '<info>there\'s this section named %s in the "%s" file</info>',
                 $section,
-                $defaultPath
+                $iniPath
             );
             $this->io->write($m);
 
@@ -111,82 +128,7 @@ class Parameters
             }
         }
 
-        $newContent = $this->buildIni($config);
-        file_put_contents($newPath, $newContent);
+        return $config;
     }
 
-    /**
-     * Create te content of an ini-file from an array (reverse fonction to
-     * parse_ini_file, but does not write in a file)
-     *
-     * @param array $config An associative array (correspond to an ini
-     * structured file)
-     *
-     * @return string the content of an ini-file
-     * @see parse_ini_file
-     */
-    public function buildIni($config)
-    {
-        $iniContent = '';
-
-        foreach ($config as $section => $list) {
-            $iniContent .= $this->buildIniSection($section) . "\n";
-
-            foreach ($list as $key => $value) {
-                $iniContent .= $this->buildIniLine($key, $value) . "\n";
-            }
-
-            $iniContent .= "\n";
-        }
-
-        return $iniContent;
-    }
-
-    /**
-     * Return the line corresponding to a section in an ini-file
-     *
-     * @param type $section The name of the section
-     *
-     * @return string
-     */
-    private function buildIniSection($section)
-    {
-        return '[' . $section . ']';
-    }
-
-    /**
-     * Convert a key - value couple into an ini Line
-     *
-     * @param string $key   The key
-     * @param string $value The value
-     *
-     * @return string
-     */
-    private function buildIniLine($key, $value)
-    {
-        return $key . ' = ' . $this->buildIniValue($value);
-    }
-
-    /**
-     * Wrap a value inside enclosure (" or ')
-     *
-     * @param string $value The value
-     *
-     * @return string
-     * @throws \Exception in case of wrong ini value
-     */
-    private function buildIniValue($value)
-    {
-        $enclosure = '"';
-        if (strpos($value, $enclosure) !== false) {
-            $enclosure = '\'';
-            if (strpos($value, $enclosure) !== false) {
-                throw new \Exception(
-                    'Ini can\'t contain both " and \' character!'
-                );
-            }
-        }
-
-        return $enclosure . $value . $enclosure;
-    }
 }

@@ -1,11 +1,4 @@
 <?php
-/**
- * Manage git configuration
- *
- * @author  thansen <thansen@solire.fr>
- * @license CC by-nc http://creativecommons.org/licenses/by-nc/3.0/fr/
- */
-
 namespace Solire\Install;
 
 use Composer\Script\Event;
