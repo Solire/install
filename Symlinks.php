@@ -47,6 +47,12 @@ class Symlinks
                 }
             }
             $link = realpath($linkDir);
+
+            $event->getIO()->write('$target : ' . $target);
+            $event->getIO()->write('$link : ' . $link);
+            $event->getIO()->write('__________');
+            $event->getIO()->write('');
+
             symlink($target, $link);
         }
     }
