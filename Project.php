@@ -29,7 +29,7 @@ class Project
             'Project\'s name',
             $projectCode
         );
-        $projectName = $event->getIO()->ask($q, $name);
+        $projectName = $event->getIO()->ask($q, $projectCode);
         $projectCode = String::urlSlug($projectName);
 
         /*
