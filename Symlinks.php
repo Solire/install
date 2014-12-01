@@ -20,6 +20,10 @@ class Symlinks
      */
     public static function create(Event $event)
     {
+        self::createDirForce('public');
+        self::createDirForce('public/front');
+        self::createDirForce('public/back');
+
         $appDirs = [
             'front' => 'public/front/default',
             'back' => 'public/back/default',
@@ -45,5 +49,33 @@ class Symlinks
             $link = realpath($linkDir);
             symlink($target, $link);
         }
+    }
+
+    /**
+     * Create a directory and checks if already existing
+     *
+     * @param string $path  The path to the directory
+     * @param bool   $force If a file exists with the same name, if "true",
+     * unlink it and continue else return false
+     *
+     * @return bool
+     */
+    protected static function createDir($path, $force = true)
+    {
+        if (file_exists($path)
+            && is_dir($path)
+        ) {
+            return true;
+        }
+
+        if (file_exists($path)) {
+            if ($force) {
+                unlink($path);
+            } else {
+                return false;
+            }
+        }
+
+        return mkdir($path);
     }
 }
