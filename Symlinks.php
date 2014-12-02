@@ -40,7 +40,7 @@ class Symlinks
 
         foreach ($appDirs as $targetDir => $linkDir) {
             $finder = Finder::create()
-                ->in($targetDir)
+                ->in('vendor/solire/' . $targetDir)
                 ->depth(0)
                 ->directories()
             ;
