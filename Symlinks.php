@@ -39,6 +39,7 @@ class Symlinks
         ];
 
         foreach ($appDirs as $targetDir => $linkDir) {
+            $targetDir = 'vendor/solire/' . $targetDir;
             $targetDirPath = new Path($targetDir, Path::SILENT);
 
             if ($targetDirPath->get() === false) {
