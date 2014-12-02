@@ -46,8 +46,10 @@ class Symlinks
                 continue;
             }
 
+            $targetDir = $targetDirPath->get();
+
             $finder = Finder::create()
-                ->in('vendor/solire/' . $targetDir)
+                ->in($targetDir)
                 ->depth(0)
                 ->directories()
             ;
