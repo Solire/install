@@ -39,7 +39,7 @@ class Symlinks
         ];
 
         foreach ($appDirs as $targetDir => $linkDir) {
-            $targetDir = 'vendor/solire/' . $targetDir;
+            $targetDir = 'vendor/solire/' . $targetDir . '/public/';
             $targetDirPath = new Path($targetDir, Path::SILENT);
 
             if ($targetDirPath->get() === false) {
@@ -61,9 +61,20 @@ class Symlinks
                  */
                 $dirName = $target->getBasename();
 
+                $m = sprintf(
+                    '<info>Création du dossier "%s"</info>',
+                    'public/' . $linkDir
+                );
+                $event->getIO()->write($m);
                 self::createDir('public/' . $linkDir);
 
                 $link = 'public/' . $linkDir . '/' . $dirName;
+                $m = sprintf(
+                    '<info>Création d\'un lien "%s" vers le dossier "%s"</info>',
+                    $link,
+                    $target->getRealPath()
+                );
+                $event->getIO()->write($m);
                 self::link($target->getRealPath(), $link);
             }
         }
