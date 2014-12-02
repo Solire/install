@@ -39,6 +39,12 @@ class Symlinks
         ];
 
         foreach ($appDirs as $targetDir => $linkDir) {
+            $targetDirPath = new Path($targetDir, Path::SILENT);
+
+            if ($targetDirPath->get() === false) {
+                continue;
+            }
+
             $finder = Finder::create()
                 ->in('vendor/solire/' . $targetDir)
                 ->depth(0)
