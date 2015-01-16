@@ -14,7 +14,7 @@
     "php": ">=5.6.0",
     "doctrine/dbal": "2.4.*",
     "symfony/finder": "2.6.*",
-    "solire/lib": "dev-master"
+    "solire/lib": "5.0.*"
   },
   "require-dev": {
     "m6web/coke": "~1.2",
