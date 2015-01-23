@@ -18,11 +18,8 @@ class Git
      *
      * @return void
      */
-    public static function reinit(Event $event)
+    public static function init(Event $event)
     {
-        $cmd = 'rm -Rf .git';
-        exec($cmd, $output, $return_var);
-
         $cmd = 'git init';
         exec($cmd, $output, $return_var);
 
