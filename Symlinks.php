@@ -3,6 +3,7 @@ namespace Solire\Install;
 
 use Composer\Script\Event;
 use Solire\Lib\Path;
+use Solire\Conf\Loader as ConfLoader;
 use Symfony\Component\Finder\Finder;
 use Exception;
 
@@ -27,19 +28,11 @@ class Symlinks
 //        self::createDir('public/front');
 //        self::createDir('public/back');
 
-        $appDirs = [
-            'front' => 'default/front',
-            'back' => 'default/back',
+        $symlinksConfigPath = 'config/symlinks.yml';
+        $symlinksConfig     = ConfLoader::load($symlinksConfigPath);
 
-            'vel/Front' => 'vel/front',
-            'vel/Back' => 'vel/back',
-
-            'client/Front' => 'client/front',
-            'client/Back' => 'client/back',
-        ];
-
-        foreach ($appDirs as $targetDir => $linkDir) {
-            $targetDir = 'vendor/solire/' . $targetDir . '/public/';
+        foreach ($symlinksConfig->dirs as $linkDir => $targetDir) {
+            $targetDir = $targetDir . '/public/';
             $targetDirPath = new Path($targetDir, Path::SILENT);
 
             if ($targetDirPath->get() === false) {
