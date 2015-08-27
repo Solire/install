@@ -32,7 +32,7 @@ class Project
             $projectCode
         );
         $projectName = $event->getIO()->ask($q, $projectCode);
-        $projectCode = String::urlSlug($projectName);
+        $projectCode = String::urlSlug($projectName, '_');
 
         /*
          * Change project's name in config/main.ini
