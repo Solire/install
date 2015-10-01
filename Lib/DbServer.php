@@ -18,14 +18,14 @@ class DbServer
      *
      * @var \Doctrine\DBAL\Connection
      */
-    private $connection;
+    protected $connection;
 
     /**
      * Connection parameters
      *
      * @var array
      */
-    private $config;
+    protected $config;
 
     /**
      * Input / Output interface
