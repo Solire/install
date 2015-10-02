@@ -46,6 +46,7 @@ class Bower
                 '<info>Installation de bower "%s"</info>',
                 $targetDir
             );
+            $event->getIO()->write($msg);
             $output = shell_exec(sprintf($cmd, $targetDir));
             $event->getIO()->write($output);
         }
