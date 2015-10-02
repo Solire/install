@@ -32,12 +32,11 @@ class Symlinks
 
         $conf = ConfLoader::load($extra['frontEnd']['dirs']);
 
-        $linkMask = $conf->linkMask;
-        $targetMask = $conf->targetMask;
-
-        foreach ($conf->dirs as $linkDir => $targetDir) {
-            $targetDir = $targetDir . '/public/';
-            $targetDirPath = new Path($targetDir, Path::SILENT);
+        foreach ($conf->dirs as $linkDir => $targetName) {
+            $targetDirPath = new Path(
+                sprintf($conf->targetMask, $targetName),
+                Path::SILENT
+            );
 
             if ($targetDirPath->get() === false) {
                 continue;
@@ -64,7 +63,7 @@ class Symlinks
                 );
                 $event->getIO()->write($msg);
 
-                $link = 'public/' . $linkDir . '/' . $dirName;
+                $link = sprintf($conf->linkMask, $linkDir, $dirName);
                 $link = new Symlink($target->getRealPath(), $link);
                 if ($link->create()) {
                     $msg = sprintf(
