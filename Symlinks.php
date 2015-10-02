@@ -63,12 +63,12 @@ class Symlinks
                 );
                 $event->getIO()->write($msg);
 
-                $link = sprintf($conf->linkMask, $linkDir, $dirName);
-                $link = new Symlink($target->getRealPath(), $link);
+                $linkPath = sprintf($conf->linkMask, $linkDir, $dirName);
+                $link = new Symlink($target->getRealPath(), $linkPath);
                 if ($link->create()) {
                     $msg = sprintf(
                         '<info>Création d\'un lien "%s" vers le dossier "%s"</info>',
-                        $link,
+                        $linkPath,
                         $target->getRealPath()
                     );
                     $event->getIO()->write($msg);
