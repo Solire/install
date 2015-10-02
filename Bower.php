@@ -31,8 +31,10 @@ class Bower
         $cmd = __DIR__ . Path::DS . self::BOWER_SCRIPT . ' %s';
 
         foreach ($symlinksConfig->dirs as $linkDir => $targetDir) {
-            $targetDir = $targetDir;
-            $targetDirPath = new Path($targetDir, Path::SILENT);
+            $targetDirPath = new Path(
+                sprintf($conf->targetMask, $targetName),
+                Path::SILENT
+            );
 
             if ($targetDirPath->get() === false) {
                 continue;
