@@ -2,10 +2,12 @@
 namespace Solire\Install;
 
 use Composer\Script\Event;
-use Solire\Lib\Path;
-use Solire\Conf\Loader as ConfLoader;
-use Symfony\Component\Finder\Finder;
 use Exception;
+use Solire\Conf\Loader as ConfLoader;
+use Solire\Install\Lib\Symlink;
+use Solire\Lib\Path;
+use Symfony\Component\Finder\Finder;
+use Symfony\Component\Finder\SplFileInfo;
 
 /**
  * Prompts questions relative to ini-files
@@ -25,13 +27,15 @@ class Symlinks
     public static function create(Event $event)
     {
         self::createDir('public');
-//        self::createDir('public/front');
-//        self::createDir('public/back');
 
-        $symlinksConfigPath = 'config/symlinks.yml';
-        $symlinksConfig     = ConfLoader::load($symlinksConfigPath);
+        $extra = $event->getComposer()->getPackage()->getExtra();
 
-        foreach ($symlinksConfig->dirs as $linkDir => $targetDir) {
+        $conf = ConfLoader::load($extra['frontEnd']['dirs']);
+
+        $linkMask = $conf->linkMask;
+        $targetMask = $conf->targetMask;
+
+        foreach ($conf->dirs as $linkDir => $targetDir) {
             $targetDir = $targetDir . '/public/';
             $targetDirPath = new Path($targetDir, Path::SILENT);
 
@@ -47,104 +51,30 @@ class Symlinks
                 ->directories()
             ;
 
-            /* @var $target \Symfony\Component\Finder\SplFileInfo */
+            /* @var $target SplFileInfo */
             foreach ($finder as $target) {
                 /*
                  * $dirName = js|css|img|font|...
                  */
                 $dirName = $target->getBasename();
 
-                $m = sprintf(
+                $msg = sprintf(
                     '<info>Création du dossier "%s"</info>',
                     'public/' . $linkDir
                 );
-                $event->getIO()->write($m);
-                self::createDir('public/' . $linkDir);
+                $event->getIO()->write($msg);
 
                 $link = 'public/' . $linkDir . '/' . $dirName;
-                $m = sprintf(
-                    '<info>Création d\'un lien "%s" vers le dossier "%s"</info>',
-                    $link,
-                    $target->getRealPath()
-                );
-                $event->getIO()->write($m);
-                self::link($target->getRealPath(), $link);
+                $link = new Symlink($target->getRealPath(), $link);
+                if ($link->create()) {
+                    $msg = sprintf(
+                        '<info>Création d\'un lien "%s" vers le dossier "%s"</info>',
+                        $link,
+                        $target->getRealPath()
+                    );
+                    $event->getIO()->write($msg);
+                }
             }
         }
-    }
-
-    /**
-     *
-     *
-     * @param string $target
-     * @param string $link
-     * @param bool   $force
-     *
-     * @return bool
-     * @throws Exception
-     */
-    protected static function link($target, $link, $force = true)
-    {
-        $targetPath = new Path($target, Path::SILENT);
-        if ($targetPath->get() === false) {
-            return false;
-        }
-        $target = $targetPath->get();
-
-        $linkPath = new Path($link, Path::SILENT);
-        if ($linkPath->get() !== false) {
-            $link = $linkPath->get();
-
-            if (!$force) {
-                return false;
-            }
-
-            if (is_link($link)) {
-                unlink($link);
-            } else {
-                throw new Exception('"' . $link . '" existe déjà et n\'est pas '
-                    . 'un lien symbolique'
-                );
-            }
-        } else {
-            $parent = pathinfo($link, PATHINFO_DIRNAME);
-            $parentPath = new Path($parent);
-            $link = $parentPath->get() . '/' . pathinfo($link, PATHINFO_BASENAME);
-        }
-
-        $status = symlink($target, $link);
-        if (!$status) {
-            throw new Exception('La création du lien "' . $link . '" vers "'
-                . $target . '" a échouée'
-            );
-        }
-
-        return true;
-    }
-
-    /**
-     * Créer un dossier en vérifiant au préalable s'il existe déjà
-     *
-     * @param string $path  Le chemin du dossier
-     *
-     * @return bool
-     * @throws Exception Si le fichier existe déjà mais n'est pas un dossier
-     */
-    protected static function createDir($path)
-    {
-        if (file_exists($path)
-            && is_dir($path)
-        ) {
-            return true;
-        }
-
-        if (file_exists($path)) {
-            throw new Exception('On ne peut pas créer le dossier '
-                . '"' . $path . '" car il existe déjà mais n\'est pas un'
-                . 'dossier'
-            );
-        }
-
-        return mkdir($path, 0777, true);
     }
 }

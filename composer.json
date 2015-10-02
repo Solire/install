@@ -19,7 +19,8 @@
   },
   "require-dev": {
     "m6web/coke": "~1.2",
-    "siwayll/phpcs-norme-dpsi": "~3.0"
+    "siwayll/phpcs-norme-dpsi": "~3.0",
+    "atoum/atoum": "~2.2"
   },
   "autoload": {
     "psr-4": { "Solire\\Install\\": "" }

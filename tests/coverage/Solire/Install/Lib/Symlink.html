@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+	<head>
+		<meta http-equiv="Content-Language" content="en" />
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<title>Solire\Install : code coverage of Solire\Install\Lib\Symlink</title>
+		<link rel="stylesheet" media="screen" type="text/css" href="../../../screen.css" title="Screen" />
+	</head>
+	<body>
+		<div id="header">
+			<h1>Code coverage of <a href="../../../index.html">Solire\Install</a>: Solire\Install\Lib\Symlink</h1>
+			<h2>Class code coverage <span>88.46%</span></h2>
+		</div>
+		<div id="page">
+			<div id="content">
+				<h3>Methods</h3>
+				<ul class="summary">
+					
+						
+							<li>
+								
+								
+									<div class="bar">
+										<div class="background"></div>
+										<div class="graph" style="width: 100%"></div>
+										<div class="label">
+											<span class="percent">100%</span>
+											<a href="#__construct">__construct</a>
+										</div>
+									</div>
+								
+							</li>
+						
+							<li>
+								
+								
+									<div class="bar">
+										<div class="background"></div>
+										<div class="graph" style="width: 100%"></div>
+										<div class="label">
+											<span class="percent">100%</span>
+											<a href="#testTarget">testTarget</a>
+										</div>
+									</div>
+								
+							</li>
+						
+							<li>
+								
+								
+									<div class="bar">
+										<div class="background"></div>
+										<div class="graph" style="width: 100%"></div>
+										<div class="label">
+											<span class="percent">100%</span>
+											<a href="#testLink">testLink</a>
+										</div>
+									</div>
+								
+							</li>
+						
+							<li>
+								
+								
+									<div class="bar">
+										<div class="background"></div>
+										<div class="graph" style="width: 100%"></div>
+										<div class="label">
+											<span class="percent">100%</span>
+											<a href="#create">create</a>
+										</div>
+									</div>
+								
+							</li>
+						
+							<li>
+								
+								
+									<div class="bar">
+										<div class="background"></div>
+										<div class="graph" style="width: 50%"></div>
+										<div class="label">
+											<span class="percent">50%</span>
+											<a href="#createDir">createDir</a>
+										</div>
+									</div>
+								
+							</li>
+						
+					
+				</ul>
+				<h3>Source</h3>
+				<table cellpadding="0" cellspacing="0" class="source">
+					<tr><th class="number">Line</th><th>Code</th></tr>
+					<tr><td class="number">1</td><td><pre>&lt;?php
+</pre></td></tr><tr><td class="number">2</td><td><pre>
+</pre></td></tr><tr><td class="number">3</td><td><pre>namespace Solire\Install\Lib;
+</pre></td></tr><tr><td class="number">4</td><td><pre>
+</pre></td></tr><tr><td class="number">5</td><td><pre>use Exception;
+</pre></td></tr><tr><td class="number">6</td><td><pre>use Solire\Lib\Path;
+</pre></td></tr><tr><td class="number">7</td><td><pre>
+</pre></td></tr><tr><td class="number">8</td><td><pre>/**
+</pre></td></tr><tr><td class="number">9</td><td><pre> * Description of Symlink
+</pre></td></tr><tr><td class="number">10</td><td><pre> *
+</pre></td></tr><tr><td class="number">11</td><td><pre> * @author thansen
+</pre></td></tr><tr><td class="number">12</td><td><pre> */
+</pre></td></tr><tr><td class="number">13</td><td><pre>class Symlink
+</pre></td></tr><tr><td class="number">14</td><td><pre>{
+</pre></td></tr><tr><td class="number">15</td><td><pre>    /**
+</pre></td></tr><tr><td class="number">16</td><td><pre>     * Chemin de la cible
+</pre></td></tr><tr><td class="number">17</td><td><pre>     *
+</pre></td></tr><tr><td class="number">18</td><td><pre>     * @var string
+</pre></td></tr><tr><td class="number">19</td><td><pre>     */
+</pre></td></tr><tr><td class="number">20</td><td><pre>    private $target;
+</pre></td></tr><tr><td class="number">21</td><td><pre>
+</pre></td></tr><tr><td class="number">22</td><td><pre>    /**
+</pre></td></tr><tr><td class="number">23</td><td><pre>     * Chemin du lien
+</pre></td></tr><tr><td class="number">24</td><td><pre>     *
+</pre></td></tr><tr><td class="number">25</td><td><pre>     * @var string
+</pre></td></tr><tr><td class="number">26</td><td><pre>     */
+</pre></td></tr><tr><td class="number">27</td><td><pre>    private $link;
+</pre></td></tr><tr><td class="number">28</td><td><pre>
+</pre></td></tr><tr><td class="number">29</td><td><pre>    /**
+</pre></td></tr><tr><td class="number">30</td><td><pre>     * Supprime le lien s&#039;il existe d&eacute;j&agrave;
+</pre></td></tr><tr><td class="number">31</td><td><pre>     *
+</pre></td></tr><tr><td class="number">32</td><td><pre>     * @var boolean
+</pre></td></tr><tr><td class="number">33</td><td><pre>     */
+</pre></td></tr><tr><td class="number">34</td><td><pre>    private $force;
+</pre></td></tr><tr><td class="number">35</td><td><pre>
+</pre></td></tr><tr><td class="number">36</td><td><pre>    /**
+</pre></td></tr><tr><td class="number">37</td><td><pre>     * Constructeur
+</pre></td></tr><tr><td class="number">38</td><td><pre>     *
+</pre></td></tr><tr><td class="number">39</td><td><pre>     * @param string  $target Chemin de la cible
+</pre></td></tr><tr><td class="number">40</td><td><pre>     * @param string  $link   Chemin du lien
+</pre></td></tr><tr><td class="number">41</td><td><pre>     * @param boolean $force  Supprime le lien s&#039;il existe d&eacute;j&agrave;
+</pre></td></tr><tr><td class="number">42</td><td><pre>     */
+</pre></td></tr><tr><td class="number"><a name="__construct"></a>43</td><td><pre>    public function __construct($target, $link, $force = true)
+</pre></td></tr><tr><td class="number"><a name="__construct"></a>44</td><td><pre>    {
+</pre></td></tr><tr class="covered"><td class="number">45</td><td><pre>        $this-&gt;target = $target;
+</pre></td></tr><tr class="covered"><td class="number">46</td><td><pre>        $this-&gt;link = $link;
+</pre></td></tr><tr class="covered"><td class="number">47</td><td><pre>        $this-&gt;force = $force;
+</pre></td></tr><tr class="covered"><td class="number">48</td><td><pre>    }
+</pre></td></tr><tr><td class="number"><a name="__construct"></a>49</td><td><pre>
+</pre></td></tr><tr><td class="number"><a name="__construct"></a>50</td><td><pre>    /**
+</pre></td></tr><tr><td class="number"><a name="__construct"></a>51</td><td><pre>     * The the target path
+</pre></td></tr><tr><td class="number"><a name="__construct"></a>52</td><td><pre>     *
+</pre></td></tr><tr><td class="number"><a name="__construct"></a>53</td><td><pre>     * @return boolean
+</pre></td></tr><tr><td class="number"><a name="__construct"></a>54</td><td><pre>     */
+</pre></td></tr><tr><td class="number"><a name="testTarget"></a>55</td><td><pre>    private function testTarget()
+</pre></td></tr><tr><td class="number"><a name="testTarget"></a>56</td><td><pre>    {
+</pre></td></tr><tr class="covered"><td class="number">57</td><td><pre>        $targetPath = new Path($this-&gt;target, Path::SILENT);
+</pre></td></tr><tr class="covered"><td class="number">58</td><td><pre>        if ($targetPath-&gt;get() === false) {
+</pre></td></tr><tr class="covered"><td class="number">59</td><td><pre>            return false;
+</pre></td></tr><tr><td class="number"><a name="testTarget"></a>60</td><td><pre>        }
+</pre></td></tr><tr class="covered"><td class="number">61</td><td><pre>        $this-&gt;target = $targetPath-&gt;get();
+</pre></td></tr><tr><td class="number"><a name="testTarget"></a>62</td><td><pre>
+</pre></td></tr><tr class="covered"><td class="number">63</td><td><pre>        return true;
+</pre></td></tr><tr><td class="number"><a name="testTarget"></a>64</td><td><pre>    }
+</pre></td></tr><tr><td class="number"><a name="testTarget"></a>65</td><td><pre>
+</pre></td></tr><tr><td class="number"><a name="testTarget"></a>66</td><td><pre>    /**
+</pre></td></tr><tr><td class="number"><a name="testTarget"></a>67</td><td><pre>     * Test the link path
+</pre></td></tr><tr><td class="number"><a name="testTarget"></a>68</td><td><pre>     *
+</pre></td></tr><tr><td class="number"><a name="testTarget"></a>69</td><td><pre>     * @return boolean
+</pre></td></tr><tr><td class="number"><a name="testTarget"></a>70</td><td><pre>     * @throws Exception If the link exists and is not a link
+</pre></td></tr><tr><td class="number"><a name="testTarget"></a>71</td><td><pre>     */
+</pre></td></tr><tr><td class="number"><a name="testLink"></a>72</td><td><pre>    private function testLink()
+</pre></td></tr><tr><td class="number"><a name="testLink"></a>73</td><td><pre>    {
+</pre></td></tr><tr class="covered"><td class="number">74</td><td><pre>        $linkPath = new Path($this-&gt;link, Path::SILENT);
+</pre></td></tr><tr class="covered"><td class="number">75</td><td><pre>        if ($linkPath-&gt;get() !== false) {
+</pre></td></tr><tr class="covered"><td class="number">76</td><td><pre>            $this-&gt;link = $linkPath-&gt;get();
+</pre></td></tr><tr><td class="number"><a name="testLink"></a>77</td><td><pre>
+</pre></td></tr><tr class="covered"><td class="number">78</td><td><pre>            if (!$this-&gt;force) {
+</pre></td></tr><tr class="covered"><td class="number">79</td><td><pre>                return false;
+</pre></td></tr><tr><td class="number"><a name="testLink"></a>80</td><td><pre>            }
+</pre></td></tr><tr><td class="number"><a name="testLink"></a>81</td><td><pre>
+</pre></td></tr><tr class="covered"><td class="number">82</td><td><pre>            if (is_link($this-&gt;link)) {
+</pre></td></tr><tr class="covered"><td class="number">83</td><td><pre>                unlink($this-&gt;link);
+</pre></td></tr><tr><td class="number"><a name="testLink"></a>84</td><td><pre>
+</pre></td></tr><tr class="covered"><td class="number">85</td><td><pre>                return true;
+</pre></td></tr><tr><td class="number"><a name="testLink"></a>86</td><td><pre>            }
+</pre></td></tr><tr><td class="number"><a name="testLink"></a>87</td><td><pre>
+</pre></td></tr><tr class="covered"><td class="number">88</td><td><pre>            $msg = sprintf(
+</pre></td></tr><tr class="covered"><td class="number">89</td><td><pre>                &#039;&quot;%s&quot; existe d&eacute;j&agrave; et n\&#039;est pas un lien symbolique&#039;,
+</pre></td></tr><tr class="covered"><td class="number">90</td><td><pre>                $this-&gt;link
+</pre></td></tr><tr class="covered"><td class="number">91</td><td><pre>            );
+</pre></td></tr><tr><td class="number"><a name="testLink"></a>92</td><td><pre>
+</pre></td></tr><tr class="covered"><td class="number">93</td><td><pre>            throw new Exception($msg);
+</pre></td></tr><tr><td class="number"><a name="testLink"></a>94</td><td><pre>        }
+</pre></td></tr><tr><td class="number"><a name="testLink"></a>95</td><td><pre>
+</pre></td></tr><tr class="covered"><td class="number">96</td><td><pre>        $parent = pathinfo($this-&gt;link, PATHINFO_DIRNAME);
+</pre></td></tr><tr class="covered"><td class="number">97</td><td><pre>        self::createDir($parent);
+</pre></td></tr><tr class="covered"><td class="number">98</td><td><pre>        $parentPath = new Path($parent, Path::SILENT);
+</pre></td></tr><tr><td class="number"><a name="testLink"></a>99</td><td><pre>
+</pre></td></tr><tr class="covered"><td class="number">100</td><td><pre>        $this-&gt;link = $parentPath-&gt;get() . &#039;/&#039; . pathinfo($this-&gt;link, PATHINFO_BASENAME);
+</pre></td></tr><tr><td class="number"><a name="testLink"></a>101</td><td><pre>
+</pre></td></tr><tr class="covered"><td class="number">102</td><td><pre>        return true;
+</pre></td></tr><tr><td class="number"><a name="testLink"></a>103</td><td><pre>    }
+</pre></td></tr><tr><td class="number"><a name="testLink"></a>104</td><td><pre>
+</pre></td></tr><tr><td class="number"><a name="testLink"></a>105</td><td><pre>    /**
+</pre></td></tr><tr><td class="number"><a name="testLink"></a>106</td><td><pre>     * Create the symbolic link
+</pre></td></tr><tr><td class="number"><a name="testLink"></a>107</td><td><pre>     *
+</pre></td></tr><tr><td class="number"><a name="testLink"></a>108</td><td><pre>     * @return void
+</pre></td></tr><tr><td class="number"><a name="testLink"></a>109</td><td><pre>     * @throws Exception Si la cr&eacute;ation du lien symbolique &eacute;choue
+</pre></td></tr><tr><td class="number"><a name="testLink"></a>110</td><td><pre>     */
+</pre></td></tr><tr><td class="number"><a name="create"></a>111</td><td><pre>    public function create()
+</pre></td></tr><tr><td class="number"><a name="create"></a>112</td><td><pre>    {
+</pre></td></tr><tr class="covered"><td class="number">113</td><td><pre>        if (!$this-&gt;testTarget()
+</pre></td></tr><tr class="covered"><td class="number">114</td><td><pre>            || !$this-&gt;testLink()
+</pre></td></tr><tr class="covered"><td class="number">115</td><td><pre>        ) {
+</pre></td></tr><tr class="covered"><td class="number">116</td><td><pre>            return false;
+</pre></td></tr><tr><td class="number"><a name="create"></a>117</td><td><pre>        }
+</pre></td></tr><tr><td class="number"><a name="create"></a>118</td><td><pre>
+</pre></td></tr><tr class="covered"><td class="number">119</td><td><pre>        $status = @symlink($this-&gt;target, $this-&gt;link);
+</pre></td></tr><tr class="covered"><td class="number">120</td><td><pre>        if (!$status) {
+</pre></td></tr><tr class="covered"><td class="number">121</td><td><pre>            $msg = sprintf(
+</pre></td></tr><tr class="covered"><td class="number">122</td><td><pre>                &#039;La cr&eacute;ation du lien symbolique &quot;%s&quot; vers &quot;%s&quot; a &eacute;chou&eacute;e&#039;,
+</pre></td></tr><tr class="covered"><td class="number">123</td><td><pre>                $this-&gt;link,
+</pre></td></tr><tr class="covered"><td class="number">124</td><td><pre>                $this-&gt;target
+</pre></td></tr><tr class="covered"><td class="number">125</td><td><pre>            );
+</pre></td></tr><tr><td class="number"><a name="create"></a>126</td><td><pre>
+</pre></td></tr><tr class="covered"><td class="number">127</td><td><pre>            throw new Exception($msg);
+</pre></td></tr><tr><td class="number"><a name="create"></a>128</td><td><pre>        }
+</pre></td></tr><tr><td class="number"><a name="create"></a>129</td><td><pre>
+</pre></td></tr><tr class="covered"><td class="number">130</td><td><pre>        return true;
+</pre></td></tr><tr><td class="number"><a name="create"></a>131</td><td><pre>    }
+</pre></td></tr><tr><td class="number"><a name="create"></a>132</td><td><pre>
+</pre></td></tr><tr><td class="number"><a name="create"></a>133</td><td><pre>    /**
+</pre></td></tr><tr><td class="number"><a name="create"></a>134</td><td><pre>     * Cr&eacute;er un dossier en v&eacute;rifiant au pr&eacute;alable s&#039;il existe d&eacute;j&agrave;
+</pre></td></tr><tr><td class="number"><a name="create"></a>135</td><td><pre>     *
+</pre></td></tr><tr><td class="number"><a name="create"></a>136</td><td><pre>     * @param string $path  Le chemin du dossier
+</pre></td></tr><tr><td class="number"><a name="create"></a>137</td><td><pre>     *
+</pre></td></tr><tr><td class="number"><a name="create"></a>138</td><td><pre>     * @return bool
+</pre></td></tr><tr><td class="number"><a name="create"></a>139</td><td><pre>     * @throws Exception Si le fichier existe d&eacute;j&agrave; mais n&#039;est pas un dossier
+</pre></td></tr><tr><td class="number"><a name="create"></a>140</td><td><pre>     */
+</pre></td></tr><tr><td class="number"><a name="createDir"></a>141</td><td><pre>    public static function createDir($path)
+</pre></td></tr><tr><td class="number"><a name="createDir"></a>142</td><td><pre>    {
+</pre></td></tr><tr class="covered"><td class="number">143</td><td><pre>        if (file_exists($path)
+</pre></td></tr><tr class="covered"><td class="number">144</td><td><pre>            &amp;&amp; is_dir($path)
+</pre></td></tr><tr class="covered"><td class="number">145</td><td><pre>        ) {
+</pre></td></tr><tr class="covered"><td class="number">146</td><td><pre>            return true;
+</pre></td></tr><tr><td class="number"><a name="createDir"></a>147</td><td><pre>        }
+</pre></td></tr><tr><td class="number"><a name="createDir"></a>148</td><td><pre>
+</pre></td></tr><tr class="covered"><td class="number">149</td><td><pre>        if (file_exists($path)) {
+</pre></td></tr><tr><td class="number"><a name="createDir"></a>150</td><td><pre>            $msg = &#039;On ne peut pas cr&eacute;er le dossier &quot;%s&quot; car il existe d&eacute;j&agrave; &#039;
+</pre></td></tr><tr class="notCovered"><td class="number">151</td><td><pre>                 . &#039;mais n\&#039;est pas un dossier&#039;;
+</pre></td></tr><tr><td class="number"><a name="createDir"></a>152</td><td><pre>
+</pre></td></tr><tr class="notCovered"><td class="number">153</td><td><pre>            throw new Exception(
+</pre></td></tr><tr class="notCovered"><td class="number">154</td><td><pre>                sprintf(
+</pre></td></tr><tr class="notCovered"><td class="number">155</td><td><pre>                    $msg,
+</pre></td></tr><tr><td class="number"><a name="createDir"></a>156</td><td><pre>                    $path
+</pre></td></tr><tr class="notCovered"><td class="number">157</td><td><pre>                )
+</pre></td></tr><tr class="notCovered"><td class="number">158</td><td><pre>            );
+</pre></td></tr><tr><td class="number"><a name="createDir"></a>159</td><td><pre>        }
+</pre></td></tr><tr><td class="number"><a name="createDir"></a>160</td><td><pre>
+</pre></td></tr><tr class="covered"><td class="number">161</td><td><pre>        return mkdir($path, 0777, true);
+</pre></td></tr><tr><td class="number"><a name="createDir"></a>162</td><td><pre>    }
+</pre></td></tr><tr><td class="number"><a name="createDir"></a>163</td><td><pre>}
+</pre></td></tr>
+				</table>
+			</div>
+		</div>
+		<div id="footer">
+			<p>Code coverage report powered by <a href="http://atoum.org">atoum</a></p>
+		</div>
+	</body>
+</html>
