@@ -30,7 +30,7 @@ class Symlinks
 
         $extra = $event->getComposer()->getPackage()->getExtra();
 
-        $conf = ConfLoader::load($extra['frontEnd']['dirs']);
+        $conf = ConfLoader::load($extra['solire']['frontEnd']['dirs']);
 
         foreach ($conf->dirs as $linkDir => $targetName) {
             $targetDirPath = new Path(

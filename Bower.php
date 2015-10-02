@@ -26,7 +26,7 @@ class Bower
     {
         $extra = $event->getComposer()->getPackage()->getExtra();
 
-        $symlinksConfig = ConfLoader::load($extra['frontEnd']['dirs']);
+        $symlinksConfig = ConfLoader::load($extra['solire']['frontEnd']['dirs']);
 
         $cmd = __DIR__ . Path::DS . self::BOWER_SCRIPT . ' %s';
 
