@@ -56,13 +56,6 @@ class Symlinks
                  * $dirName = js|css|img|font|...
                  */
                 $dirName = $target->getBasename();
-
-                $msg = sprintf(
-                    '<info>Création du dossier "%s"</info>',
-                    'public/' . $linkDir
-                );
-                $event->getIO()->write($msg);
-
                 $linkPath = sprintf($conf->linkMask, $linkDir, $dirName);
                 $link = new Symlink($target->getRealPath(), $linkPath);
                 if ($link->create()) {

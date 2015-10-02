@@ -42,6 +42,10 @@ class Bower
 
             $targetDir = $targetDirPath->get();
 
+            $msg = sprintf(
+                '<info>Installation de bower "%s"</info>',
+                $targetDir
+            );
             $output = shell_exec(sprintf($cmd, $targetDir));
             $event->getIO()->write($output);
         }
