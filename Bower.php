@@ -32,7 +32,7 @@ class Bower
 
         foreach ($conf->dirs as $targetName) {
             $targetDirPath = new Path(
-                sprintf($conf->targetMask, $targetName),
+                $targetName,
                 Path::SILENT
             );
 
