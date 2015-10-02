@@ -26,7 +26,7 @@ class Symlinks
      */
     public static function create(Event $event)
     {
-        self::createDir('public');
+        Symlink::createDir('public');
 
         $extra = $event->getComposer()->getPackage()->getExtra();
 
