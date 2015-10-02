@@ -30,7 +30,7 @@ class Bower
 
         $cmd = __DIR__ . Path::DS . self::BOWER_SCRIPT . ' %s';
 
-        foreach ($conf->dirs as $targetDir) {
+        foreach ($conf->dirs as $targetName) {
             $targetDirPath = new Path(
                 sprintf($conf->targetMask, $targetName),
                 Path::SILENT
