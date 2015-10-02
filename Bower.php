@@ -26,11 +26,11 @@ class Bower
     {
         $extra = $event->getComposer()->getPackage()->getExtra();
 
-        $symlinksConfig = ConfLoader::load($extra['solire']['frontEnd']['dirs']);
+        $conf = ConfLoader::load($extra['solire']['frontEnd']['dirs']);
 
         $cmd = __DIR__ . Path::DS . self::BOWER_SCRIPT . ' %s';
 
-        foreach ($symlinksConfig->dirs as $linkDir => $targetDir) {
+        foreach ($conf->dirs as $targetDir) {
             $targetDirPath = new Path(
                 sprintf($conf->targetMask, $targetName),
                 Path::SILENT
