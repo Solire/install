@@ -11,9 +11,9 @@ use Solire\Lib\Path;
  * @author  thansen <thansen@solire.fr>
  * @license CC by-nc http://creativecommons.org/licenses/by-nc/3.0/fr/
  */
-class Bower
+class FrontEnd
 {
-    const BOWER_SCRIPT = 'bin/bowerUpdate';
+    const SCRIPT = 'bin/frontEnd';
 
     /**
      * A composer installation script to make symlinks
@@ -28,7 +28,7 @@ class Bower
 
         $conf = ConfLoader::load($extra['solire']['frontEnd']['dirs']);
 
-        $cmd = __DIR__ . Path::DS . self::BOWER_SCRIPT . ' %s';
+        $cmd = __DIR__ . Path::DS . self::SCRIPT . ' %s';
 
         foreach ($conf->dirs as $targetName) {
             $targetDirPath = new Path(
@@ -43,7 +43,7 @@ class Bower
             $targetDir = $targetDirPath->get();
 
             $msg = sprintf(
-                '<info>Installation de bower "%s"</info>',
+                '<info>Installation du Front End "%s"</info>',
                 $targetDir
             );
             $event->getIO()->write($msg);

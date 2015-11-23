@@ -1,4 +1,6 @@
 #!/bin/bash
 
 cd $1
+npm install
 bower update --force-latest
+grunt
