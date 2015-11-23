@@ -1,6 +1,25 @@
 #!/bin/bash
 
+NPM_CONFIG_FILE="package.json"
+BOWER_CONFIG_FILE="bower.json"
+GRUNT_CONFIG_FILE="Gruntfile.js"
+
 cd $1
-npm install
-bower update --force-latest
-grunt
+
+# If npm config file exist
+if [ -f $NPM_CONFIG_FILE ];
+then
+    npm install
+fi
+
+# If bower config file exist
+if [ -f $BOWER_CONFIG_FILE ];
+then
+    bower update --force-latest
+fi
+
+# If grunt config file exist
+if [ -f $GRUNT_CONFIG_FILE ];
+then
+    grunt
+fi
