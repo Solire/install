@@ -140,7 +140,7 @@ class Symlink extends Atoum
             ->exception(function()use($symlink){
                 $symlink->create();
             })
-                ->hasMessage('"/var/www/solireFramework/install/tests/tmp/e/f/link-3" existe déjà et n\'est pas un lien symbolique')
+                ->hasMessage('"' . TEST_TMP_DIR . '/e/f/link-3" existe déjà et n\'est pas un lien symbolique')
         ;
     }
 
@@ -152,7 +152,7 @@ class Symlink extends Atoum
             ->exception(function()use($symlink){
                 $symlink->create();
             })
-                ->hasMessage('La création du lien symbolique "/var/www/solireFramework/install/tests/tmp/g/link-4" vers "/var/www/solireFramework/install/tests/tmp/target-1" a échouée')
+                ->hasMessage('La création du lien symbolique "' . TEST_TMP_DIR . '/g/link-4" vers "/var/www/solireFramework/install/tests/tmp/target-1" a échouée')
         ;
     }
 
