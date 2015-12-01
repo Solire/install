@@ -37,17 +37,23 @@ class Project
         /*
          * Change project's name in config/main.ini
          */
-        $path = 'config/main.default.ini';
-        $newPath = 'config/main.ini';
-        $mainConfig = Lib\Ini::parse($path);
-        $mainConfig['project']['name'] = $projectName;
-        $mainConfig['project']['code'] = $projectCode;
-        Lib\Ini::write($newPath, $mainConfig);
+        $extra = $event->getComposer()->getPackage()->getExtra();
+        $parameters = $extra['solire']['parameters'];
+        $parameters['config/main.yml']['project']['name'] = $projectName;
+        $parameters['config/main.yml']['project']['code'] = $projectCode;
+
+        $parameters['config/local.yml']['database']['dbname'] = $projectCode;
+
+        $parameters['config/local.yml']['base']['url'] = 'http://localhost/' . $projectCode . '/';
+        $parameters['config/local.yml']['base']['root'] = $projectCode . '/';
 
         /*
          * Netbeans config
          */
         self::netBeans($projectName);
+
+        $extra['solire']['parameters'] = $parameters;
+        $event->getComposer()->getPackage()->setExtra($extra);
     }
 
     /**
