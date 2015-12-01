@@ -2,8 +2,8 @@
 namespace Solire\Install;
 
 use Composer\Script\Event;
+use Solire\Install\Lib\Dir;
 use Solire\Lib\Format\String;
-use Solire\Install\Lib\Ini;
 
 /**
  * Ask for project's name and update différent config with it
@@ -24,7 +24,7 @@ class Project
      */
     public static function name(Event $event)
     {
-        $projectCode = Lib\Dir::getDirName();
+        $projectCode = Dir::getDirName();
 
         $q = sprintf(
             '<question>%s</question> (<comment>%s</comment>): ',
