@@ -16,7 +16,7 @@
 
     "symfony/finder": "2.6.*",
     "solire/conf": "~2.2",
-    "solire/lib": "dev-feature/refonteback"
+    "solire/lib": "~6.0"
   },
   "require-dev": {
     "m6web/coke": "~1.2",
