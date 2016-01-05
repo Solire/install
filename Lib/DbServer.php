@@ -114,4 +114,14 @@ class DbServer
         );
         $this->io->write($m);
     }
+
+    /**
+     * Get DB Connection
+     *
+     * @return \Doctrine\DBAL\Connection
+     */
+    public function getConnection()
+    {
+        return $this->connection;
+    }
 }

@@ -26,12 +26,13 @@ class Db
         $io = $event->getIO();
 
         $extras = $event->getComposer()->getPackage()->getExtra();
+        $parameters = $extras['solire']['parameters'];
         $dataBases = $extras['solire']['db'];
 
         foreach ($dataBases as $dataBase) {
-            $config = Ini::parse($dataBase['config']);
-            $section = $dataBase['section'];
-            $server = new DbServer($config[$section], $io);
+            $dbParam = $parameters[$dataBase['config']][$dataBase['section']];
+
+            $server = new DbServer($dbParam, $io);
 
             $dbCreated = $server->connect();
             if ($dbCreated) {
