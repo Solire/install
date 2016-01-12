@@ -12,7 +12,7 @@ use Composer\Script\Event;
 class Ask
 {
     /**
-     *
+     * Initialisation
      *
      * @param Event $event The composer event
      *
@@ -55,11 +55,22 @@ class Ask
         $configs = yaml_parse_file($extra['solire']['ask']);
 
         foreach ($configs as $path => $questions) {
+            if (!isset($parameters[$path])) {
+                $parameters[$path] = [];
+            }
+
             foreach ($questions as $section => $sectionQuestions) {
+                if (!isset($parameters[$path][$section])) {
+                    $parameters[$path][$section] = [];
+                }
+
                 foreach ($sectionQuestions as $key => $question) {
-                    $default = $parameters[$path][$section][$key];
+                    $default = '';
                     if (isset($question['default'])) {
                         $default = $question['default'];
+                    }
+                    if (isset($parameters[$path][$section][$key])) {
+                        $default = $parameters[$path][$section][$key];
                     }
 
                     $text = sprintf(
@@ -68,7 +79,7 @@ class Ask
                         $default
                     );
 
-                    if (isset($question['hide']) && $question['hide']) {
+                    if (!empty($question['hide'])) {
                         $answer = $event->getIO()->askAndHideAnswer($text, $default);
                     } else {
                         $answer = $event->getIO()->ask($text, $default);

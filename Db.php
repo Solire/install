@@ -1,9 +1,8 @@
 <?php
+
 namespace Solire\Install;
 
 use Composer\Script\Event;
-
-use Solire\Install\Lib\Ini;
 use Solire\Install\Lib\DbServer;
 
 /**
@@ -14,6 +13,7 @@ use Solire\Install\Lib\DbServer;
  */
 class Db
 {
+
     /**
      * Install the project database
      *
@@ -40,4 +40,5 @@ class Db
             }
         }
     }
+
 }
