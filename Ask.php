@@ -106,6 +106,8 @@ class Ask
         $extra = $event->getComposer()->getPackage()->getExtra();
         $parameters = $extra['solire']['parameters'];
 
+        unset ($parameters['temp']);
+
         foreach ($parameters as $path => $data) {
             yaml_emit_file($path, $data);
         }
