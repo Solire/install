@@ -15,7 +15,7 @@
     "doctrine/dbal": "2.4.*",
 
     "symfony/finder": "2.6.*",
-    "solire/conf": "~2.2",
+    "solire/conf": "^2.4",
     "solire/lib": "~6.0"
   },
   "require-dev": {
