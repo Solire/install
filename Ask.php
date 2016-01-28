@@ -73,12 +73,12 @@ class Ask
                     $parameters[$path][$section] = [];
                 }
 
-                $default = '';
-                if (isset($parameters[$path][$section][$key])) {
-                    $default = $parameters[$path][$section][$key];
-                }
-
                 foreach ($sectionQuestions as $key => $question) {
+                    $default = '';
+                    if (isset($parameters[$path][$section][$key])) {
+                        $default = $parameters[$path][$section][$key];
+                    }
+
                     $parameters[$path][$section][$key] = self::askQuestion(
                         $io,
                         $question,
@@ -132,7 +132,7 @@ class Ask
         return $answer;
     }
 
-    private static function saveAlias($alias, $value)
+    private static function saveAlias($alias, $answer)
     {
         self::$alias[$alias] = $answer;
     }
