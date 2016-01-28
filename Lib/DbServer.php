@@ -1,8 +1,11 @@
 <?php
 namespace Solire\Install\Lib;
 
-use Doctrine\DBAL\DriverManager;
 use Composer\IO\IOInterface;
+use Doctrine\DBAL\Connection;
+use Doctrine\DBAL\DriverManager;
+use Exception;
+use PDO;
 
 /**
  * Connects to a sql server, creates databases, import sql file
@@ -16,7 +19,7 @@ class DbServer
     /**
      * Connection to the database
      *
-     * @var \Doctrine\DBAL\Connection
+     * @var Connection
      */
     protected $connection;
 
@@ -47,8 +50,8 @@ class DbServer
         unset($config['dbname']);
         $config['driver'] = 'pdo_mysql';
         $config['driverOptions'] = array(
-            \PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8',
-            \PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION,
+            PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8',
+            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
         );
         $this->connection = DriverManager::getConnection($config);
 
@@ -71,7 +74,7 @@ class DbServer
             );
             $this->io->write($m);
             return true;
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $q = sprintf(
                 '<error>The database "%s" already exists, drop current databases ? [y/N]</error>',
                 $dbName
@@ -118,7 +121,7 @@ class DbServer
     /**
      * Get DB Connection
      *
-     * @return \Doctrine\DBAL\Connection
+     * @return Connection
      */
     public function getConnection()
     {
