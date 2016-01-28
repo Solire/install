@@ -73,11 +73,16 @@ class Ask
                     $parameters[$path][$section] = [];
                 }
 
+                $default = '';
+                if (isset($parameters[$path][$section][$key])) {
+                    $default = $parameters[$path][$section][$key];
+                }
+
                 foreach ($sectionQuestions as $key => $question) {
                     $parameters[$path][$section][$key] = self::askQuestion(
                         $io,
                         $question,
-                        $parameters[$path][$section][$key]
+                        $default
                     );
                 }
             }
