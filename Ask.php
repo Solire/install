@@ -74,7 +74,7 @@ class Ask
                 }
 
                 foreach ($sectionQuestions as $key => $question) {
-                    $default = '';
+                    $default = null;
                     if (isset($parameters[$path][$section][$key])) {
                         $default = $parameters[$path][$section][$key];
                     }
