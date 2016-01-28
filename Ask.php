@@ -1,7 +1,9 @@
 <?php
 namespace Solire\Install;
 
+use Composer\IO\IOInterface;
 use Composer\Script\Event;
+use Exception;
 
 /**
  * Prompts questions
@@ -11,6 +13,8 @@ use Composer\Script\Event;
  */
 class Ask
 {
+    private static $alias = [];
+
     /**
      * Initialisation
      *
@@ -28,7 +32,10 @@ class Ask
         }
 
         foreach ($parameters as $path => $data) {
-            $parameters[$path] = array_merge(yaml_parse_file($path), $parameters[$path]);
+            $parameters[$path] = array_merge(
+                yaml_parse_file($path),
+                $data
+            );
         }
 
         $extra['solire']['parameters'] = $parameters;
@@ -45,6 +52,8 @@ class Ask
      */
     public static function parameters(Event $event)
     {
+        $io = $event->getIO();
+
         $extra = $event->getComposer()->getPackage()->getExtra();
 
         $parameters = [];
@@ -65,33 +74,84 @@ class Ask
                 }
 
                 foreach ($sectionQuestions as $key => $question) {
-                    $default = '';
-                    if (isset($question['default'])) {
-                        $default = $question['default'];
-                    }
-                    if (isset($parameters[$path][$section][$key])) {
-                        $default = $parameters[$path][$section][$key];
-                    }
-
-                    $text = sprintf(
-                        '<question>%s</question> (<comment>%s</comment>): ',
-                        $question['text'],
-                        $default
+                    $parameters[$path][$section][$key] = self::askQuestion(
+                        $io,
+                        $question,
+                        $parameters[$path][$section][$key]
                     );
-
-                    if (!empty($question['hide'])) {
-                        $answer = $event->getIO()->askAndHideAnswer($text, $default);
-                    } else {
-                        $answer = $event->getIO()->ask($text, $default);
-                    }
-
-                    $parameters[$path][$section][$key] = $answer;
                 }
             }
         }
 
         $extra['solire']['parameters'] = $parameters;
         $event->getComposer()->getPackage()->setExtra($extra);
+    }
+
+    /**
+     * Pose une question
+     *
+     * @param IOInterface $io       The input output interface
+     * @param array       $question The question config
+     * @param string      $default  The default value
+     *
+     * @return string
+     */
+    private static function askQuestion(
+        IOInterface $io,
+        array $question,
+        $default = null
+    ) {
+        if (!empty($question['copy'])) {
+            return self::copyFromAlias($question['copy']);
+        }
+
+        if ($default === null && isset($question['default'])) {
+            $default = $question['default'];
+        }
+
+        $text = sprintf(
+            '<question>%s</question> (<comment>%s</comment>): ',
+            $question['text'],
+            $default
+        );
+
+        if (!empty($question['hide'])) {
+            $answer = $io->askAndHideAnswer($text, $default);
+        } else {
+            $answer = $io->ask($text, $default);
+        }
+        if (!empty($question['alias'])) {
+            self::$alias[$question['alias']] = $answer;
+        }
+
+        return $answer;
+    }
+
+    private static function saveAlias($alias, $value)
+    {
+        self::$alias[$alias] = $answer;
+    }
+
+    /**
+     * Copie une valeurs avec un alias
+     *
+     * @param string $alias Alias
+     *
+     * @return string
+     * @throws Exception Si un alias n'existe pas
+     */
+    private static function copyFromAlias($alias)
+    {
+        if (!isset(self::$alias[$alias])) {
+            throw new Exception(
+                sprintf(
+                    'parameters alias [%s] does not exist',
+                    $alias
+                )
+            );
+        }
+
+        return self::$alias[$alias];
     }
 
     /**
