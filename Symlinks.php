@@ -2,7 +2,6 @@
 namespace Solire\Install;
 
 use Composer\Script\Event;
-use Exception;
 use Solire\Conf\Loader as ConfLoader;
 use Solire\Install\Lib\Symlink;
 use Solire\Lib\Path;
