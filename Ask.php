@@ -1,4 +1,5 @@
 <?php
+
 namespace Solire\Install;
 
 use Composer\IO\IOInterface;
@@ -6,7 +7,7 @@ use Composer\Script\Event;
 use Exception;
 
 /**
- * Prompts questions
+ * Prompts questions. Save answers. Write yml files.
  *
  * @author  thansen <thansen@solire.fr>
  * @license CC by-nc http://creativecommons.org/licenses/by-nc/3.0/fr/
@@ -16,7 +17,7 @@ class Ask
     private static $alias = [];
 
     /**
-     * Initialisation
+     * Initialisation.
      *
      * @param Event $event The composer event
      *
@@ -44,7 +45,7 @@ class Ask
 
     /**
      * A composer installation script to define the different configuration
-     * parameters
+     * parameters.
      *
      * @param Event $event The composer event
      *
@@ -93,7 +94,7 @@ class Ask
     }
 
     /**
-     * Pose une question
+     * Pose une question.
      *
      * @param IOInterface $io       The input output interface
      * @param array       $question The question config
@@ -138,11 +139,12 @@ class Ask
     }
 
     /**
-     * Copie une valeurs avec un alias
+     * Copie une valeurs avec un alias.
      *
      * @param string $alias Alias
      *
      * @return string
+     *
      * @throws Exception Si un alias n'existe pas
      */
     private static function copyFromAlias($alias)
@@ -160,7 +162,7 @@ class Ask
     }
 
     /**
-     * Write config
+     * Write config.
      *
      * @param Event $event The composer event
      *
@@ -171,7 +173,7 @@ class Ask
         $extra = $event->getComposer()->getPackage()->getExtra();
         $parameters = $extra['solire']['parameters'];
 
-        unset ($parameters['temp']);
+        unset($parameters['temp']);
 
         foreach ($parameters as $path => $data) {
             yaml_emit_file($path, $data);

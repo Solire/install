@@ -6,16 +6,15 @@ use Composer\Script\Event;
 use Solire\Install\Lib\DbServer;
 
 /**
- * Install the databases needed in the project
+ * Install the databases needed in the project.
  *
  * @author  thansen <thansen@solire.fr>
  * @license CC by-nc http://creativecommons.org/licenses/by-nc/3.0/fr/
  */
 class Db
 {
-
     /**
-     * Install the project database
+     * Install the project database.
      *
      * @param Event $event The composer event
      *
@@ -40,5 +39,4 @@ class Db
             }
         }
     }
-
 }

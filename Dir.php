@@ -5,14 +5,14 @@ namespace Solire\Install;
 use Composer\Script\Event;
 
 /**
- * Description of Cache
+ * Manage directories.
  *
  * @author thansen
  */
 class Dir
 {
     /**
-     * Set the writing right for all on twig cache directory
+     * Set the writing right for all on twig cache directory.
      *
      * @param Event $event The composer event
      *

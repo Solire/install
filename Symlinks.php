@@ -1,4 +1,5 @@
 <?php
+
 namespace Solire\Install;
 
 use Composer\Script\Event;
@@ -9,7 +10,7 @@ use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
 
 /**
- * Prompts questions relative to ini-files
+ * Create symlinks.
  *
  * @author  thansen <thansen@solire.fr>
  * @license CC by-nc http://creativecommons.org/licenses/by-nc/3.0/fr/
@@ -17,7 +18,7 @@ use Symfony\Component\Finder\SplFileInfo;
 class Symlinks
 {
     /**
-     * A composer installation script to make symlinks
+     * A composer installation script to make symlinks.
      *
      * @param Event $event The composer event
      *

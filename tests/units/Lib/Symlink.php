@@ -6,7 +6,7 @@ use mageekguy\atoum as Atoum;
 use Solire\Install\Lib\Symlink as TestClass;
 
 /**
- * Description of Columns
+ * Description of Symlink.
  *
  * @author thansen
  */
@@ -137,7 +137,7 @@ class Symlink extends Atoum
         $symlink = $this->testConstructor03();
 
         $this
-            ->exception(function()use($symlink){
+            ->exception(function () use ($symlink) {
                 $symlink->create();
             })
                 ->hasMessage('"' . TEST_TMP_DIR . '/e/f/link-3" existe déjà et n\'est pas un lien symbolique')
@@ -149,7 +149,7 @@ class Symlink extends Atoum
         $symlink = $this->testConstructor04();
 
         $this
-            ->exception(function()use($symlink){
+            ->exception(function () use ($symlink) {
                 $symlink->create();
             })
                 ->hasMessage('La création du lien symbolique "' . TEST_TMP_DIR . '/g/link-4" vers "/var/www/solireFramework/install/tests/tmp/target-1" a échouée')
