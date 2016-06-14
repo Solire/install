@@ -6,39 +6,39 @@ use Exception;
 use Solire\Lib\Path;
 
 /**
- * Description of Symlink
+ * Description of Symlink.
  *
  * @author thansen
  */
 class Symlink
 {
     /**
-     * Chemin de la cible
+     * Chemin de la cible.
      *
      * @var string
      */
     private $target;
 
     /**
-     * Chemin du lien
+     * Chemin du lien.
      *
      * @var string
      */
     private $link;
 
     /**
-     * Supprime le lien s'il existe déjà
+     * Supprime le lien s'il existe déjà.
      *
-     * @var boolean
+     * @var bool
      */
     private $force;
 
     /**
-     * Constructeur
+     * Constructeur.
      *
-     * @param string  $target Chemin de la cible
-     * @param string  $link   Chemin du lien
-     * @param boolean $force  Supprime le lien s'il existe déjà
+     * @param string $target Chemin de la cible
+     * @param string $link   Chemin du lien
+     * @param bool   $force  Supprime le lien s'il existe déjà
      */
     public function __construct($target, $link, $force = true)
     {
@@ -48,9 +48,9 @@ class Symlink
     }
 
     /**
-     * The the target path
+     * The the target path.
      *
-     * @return boolean
+     * @return bool
      */
     private function testTarget()
     {
@@ -64,9 +64,10 @@ class Symlink
     }
 
     /**
-     * Test the link path
+     * Test the link path.
      *
-     * @return boolean
+     * @return bool
+     *
      * @throws Exception If the link exists and is not a link
      */
     private function testLink()
@@ -103,9 +104,10 @@ class Symlink
     }
 
     /**
-     * Create the symbolic link
+     * Create the symbolic link.
      *
      * @return void
+     *
      * @throws Exception Si la création du lien symbolique échoue
      */
     public function create()
@@ -131,11 +133,12 @@ class Symlink
     }
 
     /**
-     * Créer un dossier en vérifiant au préalable s'il existe déjà
+     * Créer un dossier en vérifiant au préalable s'il existe déjà.
      *
-     * @param string $path  Le chemin du dossier
+     * @param string $path Le chemin du dossier
      *
      * @return bool
+     *
      * @throws Exception Si le fichier existe déjà mais n'est pas un dossier
      */
     public static function createDir($path)

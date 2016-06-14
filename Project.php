@@ -1,4 +1,5 @@
 <?php
+
 namespace Solire\Install;
 
 use Composer\Script\Event;
@@ -6,7 +7,7 @@ use Solire\Install\Lib\Dir;
 use Solire\Lib\Format\String;
 
 /**
- * Ask for project's name and update différent config with it
+ * Ask for project's name and update différent config with it.
  *
  * @author  thansen <thansen@solire.fr>
  * @license CC by-nc http://creativecommons.org/licenses/by-nc/3.0/fr/
@@ -16,7 +17,7 @@ class Project
     const NETBEANS = 'nbproject/project.xml';
 
     /**
-     * Ask for project's name and update différent config with it
+     * Ask for project's name and update différent config with it.
      *
      * @param Event $event The composer event
      *
@@ -57,7 +58,7 @@ class Project
     }
 
     /**
-     * Change the project's name in Netbeans Configuration file
+     * Change the project's name in Netbeans Configuration file.
      *
      * @param string $name
      *

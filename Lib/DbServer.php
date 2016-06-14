@@ -1,4 +1,5 @@
 <?php
+
 namespace Solire\Install\Lib;
 
 use Composer\IO\IOInterface;
@@ -8,37 +9,36 @@ use Exception;
 use PDO;
 
 /**
- * Connects to a sql server, creates databases, import sql file
+ * Connects to a sql server, creates databases, import sql file.
  *
  * @author  thansen <thansen@solire.fr>
  * @license CC by-nc http://creativecommons.org/licenses/by-nc/3.0/fr/
  */
-
 class DbServer
 {
     /**
-     * Connection to the database
+     * Connection to the database.
      *
      * @var Connection
      */
     protected $connection;
 
     /**
-     * Connection parameters
+     * Connection parameters.
      *
      * @var array
      */
     protected $config;
 
     /**
-     * Input / Output interface
+     * Input / Output interface.
      *
      * @var IOInterface
      */
     private $io;
 
     /**
-     * Constructor
+     * Constructor.
      *
      * @param array       $config The doctrine connection parameters
      * @param IOInterface $io     The input output interface
@@ -49,19 +49,19 @@ class DbServer
 
         unset($config['dbname']);
         $config['driver'] = 'pdo_mysql';
-        $config['driverOptions'] = array(
+        $config['driverOptions'] = [
             PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8',
             PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-        );
+        ];
         $this->connection = DriverManager::getConnection($config);
 
         $this->io = $io;
     }
 
     /**
-     * Create the database
+     * Create the database.
      *
-     * @return boolean
+     * @return bool
      */
     public function connect()
     {
@@ -73,6 +73,7 @@ class DbServer
                 $this->config['dbname']
             );
             $this->io->write($m);
+
             return true;
         } catch (Exception $e) {
             $q = sprintf(
@@ -88,6 +89,7 @@ class DbServer
                     $this->config['dbname']
                 );
                 $this->io->write($m);
+
                 return true;
             }
         }
@@ -96,7 +98,7 @@ class DbServer
     }
 
     /**
-     * Import a sql file into the database
+     * Import a sql file into the database.
      *
      * @param type $sqlDumpPath The path to an .sql file
      *
@@ -119,7 +121,7 @@ class DbServer
     }
 
     /**
-     * Get DB Connection
+     * Get DB Connection.
      *
      * @return Connection
      */

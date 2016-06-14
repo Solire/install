@@ -1,8 +1,9 @@
 <?php
+
 namespace Solire\Install\Lib;
 
 /**
- * Description of Dir
+ * Description of Dir.
  *
  * @author  thansen <thansen@solire.fr>
  * @license CC by-nc http://creativecommons.org/licenses/by-nc/3.0/fr/
@@ -10,7 +11,7 @@ namespace Solire\Install\Lib;
 class Dir
 {
     /**
-     * Returns the current dir name
+     * Returns the current dir name.
      *
      * @return string
      */

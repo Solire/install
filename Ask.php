@@ -1,18 +1,23 @@
 <?php
+
 namespace Solire\Install;
 
+use Composer\IO\IOInterface;
 use Composer\Script\Event;
+use Exception;
 
 /**
- * Prompts questions
+ * Prompts questions. Save answers. Write yml files.
  *
  * @author  thansen <thansen@solire.fr>
  * @license CC by-nc http://creativecommons.org/licenses/by-nc/3.0/fr/
  */
 class Ask
 {
+    private static $alias = [];
+
     /**
-     * Initialisation
+     * Initialisation.
      *
      * @param Event $event The composer event
      *
@@ -28,7 +33,10 @@ class Ask
         }
 
         foreach ($parameters as $path => $data) {
-            $parameters[$path] = array_merge(yaml_parse_file($path), $parameters[$path]);
+            $parameters[$path] = array_merge(
+                yaml_parse_file($path),
+                $data
+            );
         }
 
         $extra['solire']['parameters'] = $parameters;
@@ -37,7 +45,7 @@ class Ask
 
     /**
      * A composer installation script to define the different configuration
-     * parameters
+     * parameters.
      *
      * @param Event $event The composer event
      *
@@ -45,6 +53,8 @@ class Ask
      */
     public static function parameters(Event $event)
     {
+        $io = $event->getIO();
+
         $extra = $event->getComposer()->getPackage()->getExtra();
 
         $parameters = [];
@@ -65,27 +75,16 @@ class Ask
                 }
 
                 foreach ($sectionQuestions as $key => $question) {
-                    $default = '';
-                    if (isset($question['default'])) {
-                        $default = $question['default'];
-                    }
+                    $default = null;
                     if (isset($parameters[$path][$section][$key])) {
                         $default = $parameters[$path][$section][$key];
                     }
 
-                    $text = sprintf(
-                        '<question>%s</question> (<comment>%s</comment>): ',
-                        $question['text'],
+                    $parameters[$path][$section][$key] = self::askQuestion(
+                        $io,
+                        $question,
                         $default
                     );
-
-                    if (!empty($question['hide'])) {
-                        $answer = $event->getIO()->askAndHideAnswer($text, $default);
-                    } else {
-                        $answer = $event->getIO()->ask($text, $default);
-                    }
-
-                    $parameters[$path][$section][$key] = $answer;
                 }
             }
         }
@@ -95,7 +94,75 @@ class Ask
     }
 
     /**
-     * Write config
+     * Pose une question.
+     *
+     * @param IOInterface $io       The input output interface
+     * @param array       $question The question config
+     * @param string      $default  The default value
+     *
+     * @return string
+     */
+    private static function askQuestion(
+        IOInterface $io,
+        array $question,
+        $default = null
+    ) {
+        if (!empty($question['copy'])) {
+            return self::copyFromAlias($question['copy']);
+        }
+
+        if ($default === null && isset($question['default'])) {
+            $default = $question['default'];
+        }
+
+        $text = sprintf(
+            '<question>%s</question> (<comment>%s</comment>): ',
+            $question['text'],
+            $default
+        );
+
+        if (!empty($question['hide'])) {
+            $answer = $io->askAndHideAnswer($text, $default);
+        } else {
+            $answer = $io->ask($text, $default);
+        }
+        if (!empty($question['alias'])) {
+            self::$alias[$question['alias']] = $answer;
+        }
+
+        return $answer;
+    }
+
+    private static function saveAlias($alias, $answer)
+    {
+        self::$alias[$alias] = $answer;
+    }
+
+    /**
+     * Copie une valeurs avec un alias.
+     *
+     * @param string $alias Alias
+     *
+     * @return string
+     *
+     * @throws Exception Si un alias n'existe pas
+     */
+    private static function copyFromAlias($alias)
+    {
+        if (!isset(self::$alias[$alias])) {
+            throw new Exception(
+                sprintf(
+                    'parameters alias [%s] does not exist',
+                    $alias
+                )
+            );
+        }
+
+        return self::$alias[$alias];
+    }
+
+    /**
+     * Write config.
      *
      * @param Event $event The composer event
      *
@@ -106,7 +173,7 @@ class Ask
         $extra = $event->getComposer()->getPackage()->getExtra();
         $parameters = $extra['solire']['parameters'];
 
-        unset ($parameters['temp']);
+        unset($parameters['temp']);
 
         foreach ($parameters as $path => $data) {
             yaml_emit_file($path, $data);
