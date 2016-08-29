@@ -48,29 +48,7 @@ class Project
         $parameters['config/local.yml']['base']['url'] = 'http://localhost/' . $projectCode . '/';
         $parameters['config/local.yml']['base']['root'] = $projectCode . '/';
 
-        /*
-         * Netbeans config
-         */
-        self::netBeans($projectName);
-
         $extra['solire']['parameters'] = $parameters;
         $event->getComposer()->getPackage()->setExtra($extra);
-    }
-
-    /**
-     * Change the project's name in Netbeans Configuration file.
-     *
-     * @param string $name
-     *
-     * @return void
-     */
-    protected static function netBeans($name)
-    {
-        $dom = new \DomDocument();
-        $dom->preserveWhiteSpace = false;
-        $dom->load(self::NETBEANS);
-        $configuration = $dom->getElementsByTagName('name');
-        $configuration->item(0)->nodeValue = $name;
-        $dom->save(self::NETBEANS);
     }
 }
