@@ -37,7 +37,7 @@ class Ask
             $defaultPath = pathinfo($path, PATHINFO_DIRNAME)
                          . Path::DS
                          . pathinfo($path, PATHINFO_FILENAME)
-                         . '.dist.'
+                         . '.default.'
                          . pathinfo($path, PATHINFO_EXTENSION)
             ;
 
