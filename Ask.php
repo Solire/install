@@ -5,6 +5,7 @@ namespace Solire\Install;
 use Composer\IO\IOInterface;
 use Composer\Script\Event;
 use Exception;
+use Solire\Lib\Path;
 
 /**
  * Prompts questions. Save answers. Write yml files.
