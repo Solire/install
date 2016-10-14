@@ -33,8 +33,19 @@ class Ask
         }
 
         foreach ($parameters as $path => $data) {
+            $defaultPath = pathinfo($path, PATHINFO_DIRNAME)
+                         . Path::DS
+                         . pathinfo($path, PATHINFO_FILENAME)
+                         . '.dist.'
+                         . pathinfo($path, PATHINFO_EXTENSION)
+            ;
+
+            if (!file_exists($defaultPath)) {
+                $defaultPath = $path;
+            }
+
             $parameters[$path] = array_merge(
-                yaml_parse_file($path),
+                yaml_parse_file($defaultPath),
                 $data
             );
         }
