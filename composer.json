@@ -13,10 +13,10 @@
   "require": {
     "php": ">=5.6.0",
     "doctrine/dbal": "2.4.*",
-
     "symfony/finder": "2.6.*",
+
     "solire/conf": "^2.4",
-    "solire/lib": "~6.0"
+    "solire/lib": "^6.1"
   },
   "require-dev": {
     "m6web/coke": "~2.1",
