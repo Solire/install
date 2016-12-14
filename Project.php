@@ -3,7 +3,7 @@
 namespace Solire\Install;
 
 use Composer\Script\Event;
-use Solire\Install\Lib\Dir;
+use Solire\Install\Lib;
 use Solire\Lib\Format\String;
 
 /**
@@ -25,7 +25,7 @@ class Project
      */
     public static function name(Event $event)
     {
-        $projectCode = Dir::getDirName();
+        $projectCode = Lib\Dir::getDirName();
 
         $q = sprintf(
             '<question>%s</question> (<comment>%s</comment>): ',
