@@ -2,14 +2,7 @@
   "name": "solire/install",
   "type": "library",
   "description": "",
-  "keywords": [""],
-  "license": "CC by-nc",
-  "repositories": [
-    {
-      "type": "composer",
-      "url": "https://satis.solire.fr/"
-    }
-  ],
+  "license": "proprietary",
   "require": {
     "php": ">=5.6.0",
     "doctrine/dbal": "2.4.*",
